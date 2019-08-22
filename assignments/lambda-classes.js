@@ -22,7 +22,16 @@ class Instructor extends Person {
     return `Today we are learning about ${subject}`;
   }
   grade(student, subject) {
-    return `${student.name} receives a perfect score on ${subject}`;
+    console.log(`${student.name} receives a perfect score on ${subject}`);
+    let score = (Math.round(Math.random() * 10));
+    console.log(`The random score is ${score}`)
+    if (score < 5) {
+      student.grade += score;
+      console.log(`The student grade is ${student.grade}`);
+    } else {
+      student.grade -= score;
+      console.log(`The student grade is ${student.grade}`);
+    }
   }
 }
 
@@ -32,6 +41,7 @@ class Student extends Person {
     this.previousBackground = props.previousBackground;
     this.className = props.className;
     this.favSubjects = props.favSubjects;
+    this.grade = props.grade;
   }
   listsSubjects() {
     this.favSubjects.forEach((subject) => console.log(subject))
@@ -41,6 +51,14 @@ class Student extends Person {
   }
   sprintChallenge(subject) {
     return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+  graduate(instructor, subject) {
+    if (this.grade > 70) {
+      return `${this.name} graduates from Lambda School`;
+    } else {
+        instructor.grade(this, subject);
+        return `${this.name} did not get the required score. Please try again`;
+    }
   }
 }
 
@@ -94,7 +112,8 @@ const student1 = new Student ({
   location: 'Florida',
   previousBackground: 'Painter',
   className: 'WEB1',
-  favSubjects: ['Javascript', 'Python', 'SASS']
+  favSubjects: ['Javascript', 'Python', 'SASS'],
+  grade: 60
 });
 
 const student2 = new Student ({
@@ -103,7 +122,8 @@ const student2 = new Student ({
   location: 'Paris',
   previousBackground: 'Accountant',
   className: 'WEB2',
-  favSubjects: ['Javascript', 'Node.js', 'CSS']
+  favSubjects: ['Javascript', 'Node.js', 'CSS'],
+  grade: 80
 });
 
 const projectManager1 = new ProjectManager({
@@ -134,8 +154,8 @@ console.log(instructor1.speak());
 console.log(instructor2.speak());
 console.log(instructor1.demo('Flexbox'));
 console.log(instructor2.demo('JavaScript Classes'));
-console.log(instructor1.grade(student2, 'Flexbox'));
-console.log(instructor2.grade(student1, 'Javascript Prototypes'));
+// console.log(instructor1.grade(student2, 'Flexbox'));
+// console.log(instructor2.grade(student1, 'Javascript Prototypes'));
 console.log(student1);
 console.log(student2);
 console.log(student1.speak());
@@ -150,9 +170,10 @@ console.log(projectManager1);
 console.log(projectManager2);
 console.log(projectManager1.speak());
 console.log(projectManager2.speak());
-console.log(projectManager1.grade(student2, 'Python'));
-console.log(projectManager2.grade(student1, 'Node.js'));
+// projectManager1.grade(student2, 'Python');
+// projectManager2.grade(student1, 'Node.js');
 console.log(projectManager1.standUp('WEB1_George'));
 console.log(projectManager2.standUp('WEB2_Mili'));
 console.log(projectManager1.debugsCode(student1, 'Flexbox'));
 console.log(projectManager2.debugsCode(student2, 'JavaScript Function Call'));
+console.log(student1.graduate(instructor1, 'Flexbox'));
