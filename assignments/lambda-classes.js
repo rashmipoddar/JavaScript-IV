@@ -26,10 +26,10 @@ class Instructor extends Person {
     let score = (Math.round(Math.random() * 10));
     console.log(`The random score is ${score}`)
     if (score < 5) {
-      student.grade += score;
+      student.grade -= score;
       console.log(`The student grade is ${student.grade}`);
     } else {
-      student.grade -= score;
+      student.grade += score;
       console.log(`The student grade is ${student.grade}`);
     }
   }
@@ -56,8 +56,11 @@ class Student extends Person {
     if (this.grade > 70) {
       return `${this.name} graduates from Lambda School`;
     } else {
-        instructor.grade(this, subject);
-        return `${this.name} did not get the required score. Please try again`;
+        while (this.grade <= 70) {
+          instructor.grade(this, subject);
+        }
+        return `${this.name} graduates from Lambda School after re-evaluation`;
+        // return `${this.name} did not get the required score. Please try again`;
     }
   }
 }
